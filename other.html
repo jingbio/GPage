@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+    <meta http-equiv="Pragma" content="no-cache">
+    <meta http-equiv="Expires" content="0">
+    <title>密码验证页面</title>
+    <script src="./js/crypto-js.min.js"></script>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            padding: 50px;
+        }
+        #content {
+            display: none;
+        }
+        table {
+            margin: 20px auto;
+            border-collapse: collapse;
+            width: 80%;
+        }
+        th, td {
+            border: 1px solid #ddd;
+            padding: 8px;
+            text-align: center;
+        }
+        th {
+            background-color: #f2f2f2;
+        }
+        /*define msg*/
+		.custom-msg {
+		    position: fixed;
+		    top: 50%;
+		    left: 50%;
+		    transform: translate(-50%, -50%);
+		    background-color: rgba(0, 0, 0, 0.7);
+		    color: green;
+		    padding: 15px 25px;
+		    border-radius: 5px;
+		    font-size: 14px;
+		    z-index: 9999;
+		}
+
+    </style>
+</head>
+<body>
+    <div id="content">
+        <h2>密码记录</h2>
+        <table id="accountTable">
+            <thead>
+                <tr>
+                    <th>平台</th>
+                    <th>账号</th>
+                    <th>密码</th>
+                </tr>
+            </thead>
+            <tbody id="tableBody"></tbody>
+        </table>
+    </div>
+
+    <script>
+        window.onload = function() {
+            let token = prompt("请输入密钥以访问页面：");
+            if (!token) {
+                alert("密钥不能为空！");
+                return;
+            }
+
+            fetch('pwd.txt')
+                .then(response => response.text())
+                .then(text => {
+                    let pwd = decrypt(text.trim(),token);
+                    if (pwd === token) {
+                        document.getElementById("content").style.display = "block";
+                        fetch('ppdd.txt')
+                            .then(response => response.text())
+                            .then(data => {
+                                const tableBody = document.getElementById('tableBody');
+                                data = decrypt(data.trim(), token);
+                                const lines = data.trim().split('\n');
+                                lines.forEach(line => {
+                                    const [platform, account, password] = line.split(',');
+                                    const row = document.createElement('tr');
+                                    row.innerHTML = `
+                                        <td>${platform.trim()}</td>
+                                        <td>${account.trim()}</td>
+                                        <td>${password.trim()}</td>
+                                    `;
+                                    tableBody.appendChild(row);
+                                });
+                            })
+                            .catch(error => {
+                                alert("无法加载账户信息");
+                            });
+                    } else {
+                        alert("认证失败！");
+                    }
+                })
+                .catch(error => {
+                    alert("认证过程出错");
+                });
+        };
+        document.getElementById('accountTable').addEventListener('dblclick', function (event) {
+    if (event.target.tagName === 'TD') {
+        const text = event.target.innerText;
+        navigator.clipboard.writeText(text).then(() => {
+            msg(`已复制: ${text}`, 3000);
+        }).catch(err => {
+            console.error('复制失败:', err);
+        });
+    }
+});
+
+        
+		/**
+	 * 将字节数组转换为十六进制字符串
+	 * @param {Uint8Array} byteArray
+	 * @returns {string}
+	 */
+	function byteArr2HexStr(byteArray) {
+	    return Array.from(byteArray, (byte) => byte.toString(16).padStart(2, "0")).join("");
+	}
+	
+	/**
+	 * 将十六进制字符串转换为字节数组
+	 * @param {string} hexStr
+	 * @returns {Uint8Array}
+	 */
+	function hexStr2ByteArr(hexStr) {
+	    let bytes = [];
+	    for (let i = 0; i < hexStr.length; i += 2) {
+	        bytes.push(parseInt(hexStr.substr(i, 2), 16));
+	    }
+	    return new Uint8Array(bytes);
+	}
+	
+	/**
+	 * 生成 8 字节 DES 密钥
+	 * @param {string} keyStr
+	 * @returns {CryptoJS.lib.WordArray}
+	 */
+	function getKey(keyStr) {
+	    let keyBytes = CryptoJS.enc.Utf8.parse(keyStr);
+	    return CryptoJS.lib.WordArray.create(keyBytes.words.slice(0, 2)); // 取前 8 字节
+	}
+	
+	
+	/**
+	 * DES 解密
+	 * @param {string} encryptedText 需要解密的十六进制字符串
+	 * @param {string} key 解密密钥
+	 * @returns {string} 解密后的字符串
+	 */
+	function decrypt(encryptedText, key) {
+	    let encryptedBytes = hexStr2ByteArr(encryptedText);
+	    let encryptedWordArray = CryptoJS.lib.WordArray.create(encryptedBytes);
+	    let decrypted = CryptoJS.DES.decrypt({ ciphertext: encryptedWordArray }, getKey(key), {
+	        mode: CryptoJS.mode.ECB,
+	        padding: CryptoJS.pad.Pkcs7,
+	    });
+	    return decrypted.toString(CryptoJS.enc.Utf8);
+	}
+	 /**
+    * show msg
+    * @param {string} message
+    * @param {number} duration ms
+    */
+    function msg(message, duration = 3000) {
+        const msgDiv = document.createElement('div');
+        msgDiv.className = 'custom-msg';
+        msgDiv.textContent = message;
+
+        document.body.appendChild(msgDiv);
+
+        if (duration > 0) {
+            setTimeout(() => {
+                msgDiv.remove();
+            }, duration);
+        }else {
+            const handleDocumentClick = function(event) {
+                if (!msgDiv.contains(event.target)) {
+                    msgDiv.remove();
+                    document.removeEventListener('click', handleDocumentClick);
+                }
+            };
+            document.addEventListener('click', handleDocumentClick);
+        }
+    }
+    </script>
+</body>
+</html>
