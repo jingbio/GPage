@@ -32,8 +32,8 @@
   "route": {
     "rules": [
       {
-        "type": "field",
-        "inbound": ["socks-in"],
+        "inbound": ["socks-in"]
+      },{
         "outbound": "hysteria-out"
       }
     ]
