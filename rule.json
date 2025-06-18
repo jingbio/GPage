@@ -1,43 +1,14 @@
 {
-  "dns": {
-    "servers": [
-      {
-        "tag": "dns-remote",
-        "address": "1.1.1.1",
-        "address_strategy": "ipv4_only"
-      },
-      {
-        "tag": "dns-local",
-        "address": "223.5.5.5",
-        "address_strategy": "ipv4_only"
-      }
-    ],
-    "rules": [
-      {
-        "domain_suffix": [
-          "cn",
-          "baidu.com"
-        ],
-        "server": "dns-local"
-      },
-      {
-        "server": "dns-remote"
-      }
-    ]
-  },
   "inbounds": [
     {
       "type": "mixed",
       "listen": "::",
-      "listen_port": 2336,
-      "sniff": true,
-      "sniff_override_destination": true
+      "listen_port": 10000
     }
   ],
   "outbounds": [
     {
       "type": "hysteria2",
-      "tag": "proxy-out",
       "server": "i.alal.site",
       "server_port": 9527,
       "up_mbps": 20,
@@ -50,50 +21,6 @@
           "h3"
         ]
       }
-    },
-    {
-      "type": "direct",
-      "tag": "direct"
-    },
-    {
-      "type": "block",
-      "tag": "block"
     }
-  ],
-  "route": {
-    "rules": [
-      {
-        "ip_cidr": [
-          "geoip:cn"
-        ],
-        "outbound": "direct"
-      },
-      {
-        "domain_suffix": [
-          "baidu.com",
-          "bilibili.com"
-        ],
-        "outbound": "direct"
-      },
-      {
-        "domain_suffix": [
-          "youtube.com",
-          "google.com"
-        ],
-        "outbound": "proxy-out"
-      },
-      {
-        "domain_keyword": [
-          "ads",
-          "tracker"
-        ],
-        "outbound": "block"
-      },
-      {
-        "outbound": "proxy-out"
-      }
-    ],
-    "final": "proxy-out",
-    "auto_detect_interface": true
-  }
+  ]
 }
