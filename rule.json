@@ -22,9 +22,6 @@
       "up_mbps": 20,
       "down_mbps": 100,
       "password": "guojingwei",
-      "alpn": [
-        "h3"
-      ],
       "tls": {
         "enabled": true,
         "insecure": false,
