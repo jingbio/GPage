@@ -1,9 +1,10 @@
 {
   "inbounds": [
     {
-      "type": "mixed",
+      "type": "socks",
+      "tag": "socks-in",
       "listen": "::",
-      "listen_port": 10000
+      "listen_port": 2336
     }
   ],
   "outbounds": [
