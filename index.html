@@ -20,35 +20,41 @@
 <body>
 
 <h1>网站导航</h1>
-<input type="text" id="searchBox" placeholder="输入搜索，按回车..." onkeydown="handleSearch(event)">
+<input type="text" id="searchBox" placeholder="输入搜索..." oninput="filterCards()">
 <div class="card-container" id="navCards"></div>
 
 <script>
+    let navData = [];
+
+    // 加载 JSON 数据
     async function loadNavData() {
         try {
-            const res = await fetch('website-map.json');
-            const data = await res.json();
-            const container = document.getElementById('navCards');
-            container.innerHTML = '';
-            data.forEach(item => {
-                const card = document.createElement('div');
-                card.className = 'card';
-                card.textContent = item.name;
-                card.onclick = () => window.location.href = item.url;
-                container.appendChild(card);
-            });
+            const res = await fetch('nav.json');
+            navData = await res.json();
+            renderCards(navData);
         } catch (err) {
             console.error('加载导航数据失败', err);
         }
     }
 
-    function handleSearch(event) {
-        if (event.key === "Enter") {
-            const query = event.target.value.toLowerCase();
-            document.querySelectorAll('.card').forEach(card => {
-                card.style.display = card.textContent.toLowerCase().includes(query) ? 'block' : 'none';
-            });
-        }
+    // 渲染卡片
+    function renderCards(data) {
+        const container = document.getElementById('navCards');
+        container.innerHTML = '';
+        data.forEach(item => {
+            const card = document.createElement('div');
+            card.className = 'card';
+            card.textContent = item.name;
+            card.onclick = () => window.location.href = item.url;
+            container.appendChild(card);
+        });
+    }
+
+    // 实时搜索
+    function filterCards() {
+        const query = document.getElementById('searchBox').value.toLowerCase();
+        const filtered = navData.filter(item => item.name.toLowerCase().includes(query));
+        renderCards(filtered);
     }
 
     // 页面加载时渲染导航
