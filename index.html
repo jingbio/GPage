@@ -5,133 +5,54 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>导航页面</title>
     <style>
-        body {
-            font-family: 'Arial', sans-serif;
-            margin: 0;
-            padding: 0;
-            background: linear-gradient(to right, #ece9e6, #ffffff);
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            padding: 5vh 2vw;
-        }
+        body { font-family:'Arial',sans-serif; margin:0; padding:5vh 2vw; background:linear-gradient(to right,#ece9e6,#ffffff); display:flex; flex-direction:column; align-items:center; }
+        h1 { font-size:2rem; text-align:center; animation:textColorChange 5s infinite linear; margin-bottom:20px; }
+        @keyframes textColorChange { 0%{color:#FF6F61;} 25%{color:#6B5B95;} 50%{color:#88B04B;} 75%{color:#F7CAC9;} 100%{color:#FF6F61;} }
 
-        h1 {
-            text-align: center;
-            font-size: 2rem;
-            animation: textColorChange 5s infinite linear;
-            margin-bottom: 20px;
-        }
+        #searchBox { width:80%; max-width:600px; padding:10px 15px; font-size:1rem; border:2px solid #ccc; border-radius:8px; margin-bottom:30px; }
 
-        @keyframes textColorChange {
-            0% { color: #FF6F61; }
-            25% { color: #6B5B95; }
-            50% { color: #88B04B; }
-            75% { color: #F7CAC9; }
-            100% { color: #FF6F61; }
-        }
-
-        /* 搜索框样式 */
-        #searchBox {
-            width: 80%;
-            max-width: 600px;
-            padding: 10px 15px;
-            font-size: 1rem;
-            border: 2px solid #ccc;
-            border-radius: 8px;
-            margin-bottom: 30px;
-        }
-
-        /* 卡片网格 */
-        .card-container {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
-            gap: 20px;
-            width: 90%;
-            max-width: 1000px;
-        }
-
-        .card {
-            background: white;
-            padding: 20px;
-            border-radius: 10px;
-            text-align: center;
-            font-weight: bold;
-            font-size: 1.1rem;
-            cursor: pointer;
-            box-shadow: 2px 2px 10px rgba(0,0,0,0.1);
-            transition: all 0.3s ease;
-            animation: cardTextColorChange 5s infinite linear;
-        }
-
-        @keyframes cardTextColorChange {
-            0% { color: #333; }
-            50% { color: #FF6F61; }
-            100% { color: #333; }
-        }
-
-        .card:hover {
-            background: #FF6F61;
-            color: white;
-            transform: scale(1.05);
-            animation: none;
-        }
+        .card-container { display:grid; grid-template-columns:repeat(auto-fill,minmax(200px,1fr)); gap:20px; width:90%; max-width:1000px; }
+        .card { background:white; padding:20px; border-radius:10px; text-align:center; font-weight:bold; font-size:1.1rem; cursor:pointer; box-shadow:2px 2px 10px rgba(0,0,0,0.1); transition:all 0.3s ease; animation:cardTextColorChange 5s infinite linear; }
+        @keyframes cardTextColorChange { 0%{color:#333;} 50%{color:#FF6F61;} 100%{color:#333;} }
+        .card:hover { background:#FF6F61; color:white; transform:scale(1.05); animation:none; }
     </style>
 </head>
 <body>
+
 <h1>网站导航</h1>
 <input type="text" id="searchBox" placeholder="输入搜索，按回车..." onkeydown="handleSearch(event)">
-
-<div class="card-container" id="navCards">
-    <div class="card" onclick="redirectTo('https://tool.alal.site')">GTool 工具站</div>
-    <div class="card" onclick="redirectTo('https://www.chatgpt.com/')">ChatGPT</div>
-    <div class="card" onclick="redirectTo('https://chat.deepseek.com/')">DeepSeek</div>
-    <div class="card" onclick="redirectTo('https://gemini.google.com/app')">Gemini</div>
-    <div class="card" onclick="redirectTo('https://v.alal.site')">GVideo 免费观影</div>
-    <div class="card" onclick="redirectTo('https://file.alal.site')">在线网盘</div>
-    <div class="card" onclick="redirectTo('https://excalidraw.com')">excalidraw 绘图</div>
-    <div class="card" onclick="redirectTo('https://cobalt.tools')">cobalt下载</div>
-    <div class="card" onclick="redirectTo('https://next.itellyou.cn')">电脑系统下载</div>
-    <div class="card" onclick="redirectTo('https://ipv4.alal.site')">查看本机公网IP</div>
-    <div class="card" onclick="redirectTo('/healthy.html')">饮食</div>
-    <div class="card" onclick="redirectTo('https://doc.hutool.cn/')">HuTool</div>
-    <div class="card" onclick="redirectTo('https://www.cnblogs.com/')">博客园</div>
-    <div class="card" onclick="redirectTo('https://www.bilibili.com/')">哔哩哔哩</div>
-    <div class="card" onclick="redirectTo('https://www.zhihu.com/')">知乎</div>
-    <div class="card" onclick="redirectTo('https://huggingface.co/')">hugging face</div>
-    <div class="card" onclick="redirectTo('https://blacktealab.com/')">红茶研究室</div>
-    <div class="card" onclick="redirectTo('https://github.com/jingbio')">GitHub</div>
-    <div class="card" onclick="redirectTo('https://douyin.com/')">抖音</div>
-    <div class="card" onclick="redirectTo('https://www.weibo.com/')">微博</div>
-    <div class="card" onclick="redirectTo('https://www.instagram.com/')">Instagram</div>
-    <div class="card" onclick="redirectTo('https://www.facebook.com/')">Facebook</div>
-    <div class="card" onclick="redirectTo('https://twitter.com/')">Twitter</div>
-    <div class="card" onclick="redirectTo('https://www.v2ex.com')">V2EX</div>
-    <div class="card" onclick="redirectTo('https://open.spotify.com/')">spotify</div>
-    <div class="card" onclick="redirectTo('https://www.netflix.com/')">Netflix</div>
-    <div class="card" onclick="redirectTo('https://x.com/')">推特</div>
-    <div class="card" onclick="redirectTo('https://www.youtube.com/')">YouTube</div>
-    <div class="card" onclick="redirectTo('/other.html')">PassWord Book</div>
-</div>
+<div class="card-container" id="navCards"></div>
 
 <script>
-    function redirectTo(url) {
-        window.location.href = url;
+    async function loadNavData() {
+        try {
+            const res = await fetch('website-map.json');
+            const data = await res.json();
+            const container = document.getElementById('navCards');
+            container.innerHTML = '';
+            data.forEach(item => {
+                const card = document.createElement('div');
+                card.className = 'card';
+                card.textContent = item.name;
+                card.onclick = () => window.location.href = item.url;
+                container.appendChild(card);
+            });
+        } catch (err) {
+            console.error('加载导航数据失败', err);
+        }
     }
 
     function handleSearch(event) {
         if (event.key === "Enter") {
             const query = event.target.value.toLowerCase();
-            const cards = document.querySelectorAll('.card');
-            cards.forEach(card => {
-                if (card.textContent.toLowerCase().includes(query)) {
-                    card.style.display = 'block';
-                } else {
-                    card.style.display = 'none';
-                }
+            document.querySelectorAll('.card').forEach(card => {
+                card.style.display = card.textContent.toLowerCase().includes(query) ? 'block' : 'none';
             });
         }
     }
+
+    // 页面加载时渲染导航
+    loadNavData();
 </script>
 </body>
 </html>
