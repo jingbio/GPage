@@ -22,9 +22,28 @@ function renderCards(data) {
         const card = document.createElement('div');
         card.className = 'card';
         card.textContent = item.name;
-        // 打开新窗口（安全）
-        card.onclick = () => window.open(item.url, '_blank', 'noopener,noreferrer');
+        // 打开新窗口（安全）并增加点击量
+        card.onclick = async () => {
+            // 点击量 +1
+            item.clicks++;
+
+            // 调用保存方法，将 navData 更新到后端
+            await updateClickRate(data);
+
+            // 打开链接
+            window.open(item.url, '_blank', 'noopener,noreferrer');
+        };
         container.appendChild(card);
+    });
+}
+
+// =================== 更新点击率 ===================
+async function updateClickRate(data) {
+    data.sort((a, b) => b.clicks - a.clicks);
+    await fetch('/nav', {
+        method: 'POST',
+        headers: {'Content-Type': 'application/json'},
+        body: data
     });
 }
 
