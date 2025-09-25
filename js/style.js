@@ -1,8 +1,9 @@
+// =================== 全局变量 ===================
 let navData = [];
 let clickCount = 0;
 let clickTimer;
 
-// 加载 JSON 数据
+// =================== 加载 JSON 数据 ===================
 async function loadNavData() {
     try {
         const res = await fetch('/nav');
@@ -13,7 +14,7 @@ async function loadNavData() {
     }
 }
 
-// 渲染卡片
+// =================== 渲染卡片 ===================
 function renderCards(data) {
     const container = document.getElementById('navCards');
     container.innerHTML = '';
@@ -21,20 +22,20 @@ function renderCards(data) {
         const card = document.createElement('div');
         card.className = 'card';
         card.textContent = item.name;
-        //card.onclick = () => window.location.href = item.url;
-        //card.onclick = () => window.open(item.url, '_blank');
+        // 打开新窗口（安全）
         card.onclick = () => window.open(item.url, '_blank', 'noopener,noreferrer');
         container.appendChild(card);
     });
 }
 
-// 实时搜索
+// =================== 实时搜索 ===================
 function filterCards() {
     const query = document.getElementById('searchBox').value.toLowerCase();
     const filtered = navData.filter(item => item.name.toLowerCase().includes(query));
     renderCards(filtered);
 }
 
+// =================== 创建隐藏弹窗（编辑 JSON） ===================
 function createHiddenModal() {
     const modal = document.createElement('div');
     modal.id = 'modal';
@@ -67,6 +68,7 @@ function createHiddenModal() {
     textarea.style.marginBottom = '10px';
     modalContent.appendChild(textarea);
 
+    // 按钮
     const saveBtn = document.createElement('button');
     saveBtn.textContent = '保存';
     Object.assign(saveBtn.style, {
@@ -94,8 +96,8 @@ function createHiddenModal() {
     modal.appendChild(modalContent);
     document.body.appendChild(modal);
 
+    // 保存按钮逻辑
     saveBtn.addEventListener('click', async () => {
-
         let token = prompt("请输入密钥以保存：");
         if (!token) {
             alert("密钥不能为空！");
@@ -117,13 +119,13 @@ function createHiddenModal() {
                     modal.style.display = 'none';
                 }
             })
-            .catch(error => {
+            .catch(() => {
                 alert("认证过程出错");
-
             });
         loadNavData();
     });
 
+    // 关闭按钮逻辑
     closeBtn.addEventListener('click', () => {
         modal.style.display = 'none';
     });
@@ -131,8 +133,10 @@ function createHiddenModal() {
     return { modal, textarea };
 }
 
+// =================== 初始化弹窗 ===================
 const { modal, textarea } = createHiddenModal();
 
+// =================== 标题点击（触发编辑模式） ===================
 document.querySelector('h1').addEventListener('click', async () => {
     clickCount++;
     clearTimeout(clickTimer);
@@ -146,12 +150,13 @@ document.querySelector('h1').addEventListener('click', async () => {
     }
 });
 
-// 页面加载
+// =================== 页面加载事件 ===================
 window.addEventListener('DOMContentLoaded', () => {
     loadNavData();
     document.getElementById('searchBox').focus();
 });
 
+// =================== 工具函数 ===================
 /**
  * 将十六进制字符串转换为字节数组
  * @param {string} hexStr
@@ -174,7 +179,6 @@ function getKey(keyStr) {
     let keyBytes = CryptoJS.enc.Utf8.parse(keyStr);
     return CryptoJS.lib.WordArray.create(keyBytes.words.slice(0, 2)); // 取前 8 字节
 }
-
 
 /**
  * DES 解密
