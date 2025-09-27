@@ -41,7 +41,7 @@ function renderCards(data) {
 async function updateClickRate(item) {
     // 按点击量排序
     navData = navData.filter(navItem => navItem.name !== item.name);
-    navData.push(foundItem);
+    navData.push(item);
     navData.sort((a, b) => b.clicks - a.clicks);
     await fetch('/nav', {
         method: 'POST',
