@@ -15,7 +15,16 @@ h1 {
     font-weight: 300;
     text-align: center;
     margin-bottom: 30px;
-    color: #333;
+    animation: textColorChange 5s infinite linear;
+}
+
+/* 动态文字颜色动画 */
+@keyframes textColorChange {
+    0% { color: #FF6F61; }
+    25% { color: #6B5B95; }
+    50% { color: #88B04B; }
+    75% { color: #F7CAC9; }
+    100% { color: #FF6F61; }
 }
 
 /* 搜索框 */
