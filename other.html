@@ -104,15 +104,15 @@
                 });
         };
         document.getElementById('accountTable').addEventListener('dblclick', function (event) {
-    if (event.target.tagName === 'TD') {
-        const text = event.target.innerText;
-        navigator.clipboard.writeText(text).then(() => {
-            msg(`已复制: ${text}`, 3000);
-        }).catch(err => {
-            console.error('复制失败:', err);
+            if (event.target.tagName === 'TD') {
+                const text = event.target.innerText;
+                navigator.clipboard.writeText(text).then(() => {
+                    msg(`已复制: ${text}`, 3000);
+                }).catch(err => {
+                    console.error('复制失败:', err);
+                });
+            }
         });
-    }
-});
 
         
 		/**
