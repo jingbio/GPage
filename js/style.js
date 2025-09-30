@@ -149,9 +149,6 @@ function closeModal() {
 }
 
 
-// =================== 初始化弹窗 ===================
-const { modal, textarea } = initModal();
-
 // =================== 标题点击（触发编辑模式） ===================
 document.querySelector('h1').addEventListener('click', async () => {
     clickCount++;
@@ -169,6 +166,8 @@ document.querySelector('h1').addEventListener('click', async () => {
 // =================== 页面加载事件 ===================
 window.addEventListener('DOMContentLoaded', () => {
     loadNavData();
+    // =================== 初始化弹窗 ===================
+    const { modal, textarea } = initModal();
     document.getElementById('searchBox').focus();
 
     // 为搜索框添加键盘事件监听器
