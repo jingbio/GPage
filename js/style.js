@@ -98,6 +98,8 @@ function getSearchEngineUrl(query) {
     }
 }
 
+const { modal, textarea } = initModal();
+
 // =================== 创建隐藏弹窗（编辑 JSON） ===================
 function initModal() {
     const modal = document.getElementById('modal');
@@ -167,7 +169,6 @@ document.querySelector('h1').addEventListener('click', async () => {
 window.addEventListener('DOMContentLoaded', () => {
     loadNavData();
     // =================== 初始化弹窗 ===================
-    const { modal, textarea } = initModal();
     document.getElementById('searchBox').focus();
 
     // 为搜索框添加键盘事件监听器
