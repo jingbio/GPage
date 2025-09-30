@@ -99,67 +99,13 @@ function getSearchEngineUrl(query) {
 }
 
 // =================== 创建隐藏弹窗（编辑 JSON） ===================
-function createHiddenModal() {
-    const modal = document.createElement('div');
-    modal.id = 'modal';
-    Object.assign(modal.style, {
-        display: 'none',
-        position: 'fixed',
-        top: '0', left: '0', right: '0', bottom: '0',
-        background: 'rgba(0,0,0,0.5)',
-        justifyContent: 'center',
-        alignItems: 'center',
-        zIndex: '9999'
-    });
+function initModal() {
+    const modal = document.getElementById('modal');
+    const textarea = modal.querySelector('textarea');
+    const saveBtn = modal.querySelector('.save-btn');
+    const closeBtn = modal.querySelector('.close-btn');
 
-    const modalContent = document.createElement('div');
-    Object.assign(modalContent.style, {
-        background: 'white',
-        padding: '20px',
-        width: '80%',
-        maxWidth: '600px',
-        borderRadius: '10px'
-    });
-
-    const title = document.createElement('h3');
-    title.textContent = '编辑导航 JSON';
-    modalContent.appendChild(title);
-
-    const textarea = document.createElement('textarea');
-    textarea.style.width = '100%';
-    textarea.style.height = '300px';
-    textarea.style.marginBottom = '10px';
-    modalContent.appendChild(textarea);
-
-    // 按钮
-    const saveBtn = document.createElement('button');
-    saveBtn.textContent = '保存';
-    Object.assign(saveBtn.style, {
-        padding: '10px 15px',
-        background: '#4CAF50',
-        color: 'white',
-        border: 'none',
-        borderRadius: '5px',
-        marginRight: '10px',
-        cursor: 'pointer'
-    });
-
-    const closeBtn = document.createElement('button');
-    closeBtn.textContent = '关闭';
-    Object.assign(closeBtn.style, {
-        padding: '10px 15px',
-        background: '#ccc',
-        border: 'none',
-        borderRadius: '5px',
-        cursor: 'pointer'
-    });
-
-    modalContent.appendChild(saveBtn);
-    modalContent.appendChild(closeBtn);
-    modal.appendChild(modalContent);
-    document.body.appendChild(modal);
-
-    // 保存按钮逻辑
+    // 保存逻辑
     saveBtn.addEventListener('click', async () => {
         let token = prompt("请输入密钥以保存：");
         if (!token) {
@@ -179,7 +125,7 @@ function createHiddenModal() {
                         body: textarea.value
                     });
                     alert('已保存');
-                    modal.style.display = 'none';
+                    closeModal();
                 }
             })
             .catch(() => {
@@ -188,16 +134,23 @@ function createHiddenModal() {
         loadNavData();
     });
 
-    // 关闭按钮逻辑
-    closeBtn.addEventListener('click', () => {
-        modal.style.display = 'none';
-    });
+    // 关闭逻辑
+    closeBtn.addEventListener('click', closeModal);
 
     return { modal, textarea };
 }
 
+function openModal() {
+    document.getElementById('modal').style.display = 'flex';
+}
+
+function closeModal() {
+    document.getElementById('modal').style.display = 'none';
+}
+
+
 // =================== 初始化弹窗 ===================
-const { modal, textarea } = createHiddenModal();
+const { modal, textarea } = initModal();
 
 // =================== 标题点击（触发编辑模式） ===================
 document.querySelector('h1').addEventListener('click', async () => {
@@ -209,7 +162,7 @@ document.querySelector('h1').addEventListener('click', async () => {
         const res = await fetch('/nav');
         const json = await res.text();
         textarea.value = json;
-        modal.style.display = 'flex';
+        openModal();
     }
 });
 
@@ -231,12 +184,10 @@ function hexStr2ByteArr(hexStr) {
     }
     return new Uint8Array(bytes);
 }
-
 function getKey(keyStr) {
     let keyBytes = CryptoJS.enc.Utf8.parse(keyStr);
-    return CryptoJS.lib.WordArray.create(keyBytes.words.slice(0, 2)); // 取前 8 字节
+    return CryptoJS.lib.WordArray.create(keyBytes.words.slice(0, 2));
 }
-
 function decrypt(encryptedText, key) {
     let encryptedBytes = hexStr2ByteArr(encryptedText);
     let encryptedWordArray = CryptoJS.lib.WordArray.create(encryptedBytes);
