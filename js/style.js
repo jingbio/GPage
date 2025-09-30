@@ -57,6 +57,37 @@ function filterCards() {
     renderCards(filtered);
 }
 
+// =================== 处理回车搜索 ===================
+function handleSearchEnter(event) {
+    // 检查是否按下了回车键（Enter KeyCode 13 或 event.key 'Enter'）
+    if (event.key === 'Enter' || event.keyCode === 13) {
+        // 阻止默认的表单提交行为（虽然这里没有表单，但最好习惯性地加上）
+        event.preventDefault();
+
+        const query = document.getElementById('searchBox').value.trim();
+
+        if (query) {
+            // 使用当前浏览器默认引擎进行搜索
+            // 'https://www.google.com/search?q=' 是一个常用的做法
+            // 但最通用的方式是直接使用 window.location.href
+            // 浏览器会自动处理并跳转到默认的搜索页面
+            // 为了确保搜索能工作，我们使用 Google 作为示例，您可以根据需要修改。
+
+            // 方案一：使用 Google 搜索（推荐，兼容性好）
+            const searchUrl = `https://www.google.com/search?q=${encodeURIComponent(query)}`;
+            window.open(searchUrl, '_blank', 'noopener,noreferrer');
+
+            // 方案二：如果想使用浏览器默认的搜索行为（不太可靠，取决于浏览器的配置）
+            // 很多浏览器会将不完整的 URL 视为搜索，但最好使用明确的 URL 模板。
+            // window.location.href = query;
+
+        } else {
+            // 如果搜索框为空，可以保持不变或做其他提示
+            filterCards(); // 仍然执行原有的过滤操作
+        }
+    }
+}
+
 // =================== 创建隐藏弹窗（编辑 JSON） ===================
 function createHiddenModal() {
     const modal = document.createElement('div');
@@ -176,6 +207,9 @@ document.querySelector('h1').addEventListener('click', async () => {
 window.addEventListener('DOMContentLoaded', () => {
     loadNavData();
     document.getElementById('searchBox').focus();
+
+    // 为搜索框添加键盘事件监听器
+    searchBox.addEventListener('keydown', handleSearchEnter);
 });
 
 // =================== 工具函数 ===================
