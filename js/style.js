@@ -128,26 +128,6 @@ window.addEventListener('DOMContentLoaded', () => {
 
 // =================== 工具函数 ===================
 
-function hexStr2ByteArr(hexStr) {
-    let bytes = [];
-    for (let i = 0; i < hexStr.length; i += 2) {
-        bytes.push(parseInt(hexStr.substr(i, 2), 16));
-    }
-    return new Uint8Array(bytes);
-}
-function getKey(keyStr) {
-    let keyBytes = CryptoJS.enc.Utf8.parse(keyStr);
-    return CryptoJS.lib.WordArray.create(keyBytes.words.slice(0, 2));
-}
-function decrypt(encryptedText, key) {
-    let encryptedBytes = hexStr2ByteArr(encryptedText);
-    let encryptedWordArray = CryptoJS.lib.WordArray.create(encryptedBytes);
-    let decrypted = CryptoJS.DES.decrypt({ ciphertext: encryptedWordArray }, getKey(key), {
-        mode: CryptoJS.mode.ECB,
-        padding: CryptoJS.pad.Pkcs7,
-    });
-    return decrypted.toString(CryptoJS.enc.Utf8);
-}
 function getWebsiteRunTime() {
     const now = new Date();
     const diff = now - startTime; // 毫秒差
