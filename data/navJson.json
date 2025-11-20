@@ -1,0 +1,252 @@
+[
+  {
+    "name": "ChatGPT",
+    "url": "https://www.chatgpt.com/",
+    "clicks": 94
+  },
+  {
+    "name": "YouTube",
+    "url": "https://www.youtube.com/",
+    "clicks": 84
+  },
+  {
+    "name": "GTool 工具站",
+    "url": "https://tool.alal.site",
+    "clicks": 78
+  },
+  {
+    "name": "Telegram Web",
+    "url": "https://web.telegram.org/k/",
+    "clicks": 61
+  },
+  {
+    "name": "V2EX",
+    "url": "https://www.v2ex.com",
+    "clicks": 46
+  },
+  {
+    "name": "GitHub",
+    "url": "https://github.com/jingbio",
+    "clicks": 46
+  },
+  {
+    "name": "spotify",
+    "url": "https://open.spotify.com/",
+    "clicks": 35
+  },
+  {
+    "name": "BiliBilili哔哩哔哩",
+    "url": "https://www.bilibili.com/",
+    "clicks": 31
+  },
+  {
+    "name": "CloudFlare",
+    "url": "https://dash.cloudflare.com/",
+    "clicks": 28
+  },
+  {
+    "name": "Gemini",
+    "url": "https://gemini.google.com/app",
+    "clicks": 23
+  },
+  {
+    "name": "NodeSeek",
+    "url": "https://www.nodeseek.com/",
+    "clicks": 16
+  },
+  {
+    "name": "DeepSeek",
+    "url": "https://chat.deepseek.com/",
+    "clicks": 13
+  },
+  {
+    "name": "网速测试",
+    "url": "https://speed.cloudflare.com",
+    "clicks": 9
+  },
+  {
+    "name": "Claw Cloud",
+    "url": "https://us-east-1.run.claw.cloud",
+    "clicks": 8
+  },
+  {
+    "name": "PostMan",
+    "url": "https://www.postman.com/",
+    "clicks": 8
+  },
+  {
+    "name": "GVideo 免费观影",
+    "url": "https://v.alal.site",
+    "clicks": 7
+  },
+  {
+    "name": "Google商店",
+    "url": "https://chromewebstore.google.com/",
+    "clicks": 7
+  },
+  {
+    "name": "Gmail",
+    "url": "https://mail.google.com",
+    "clicks": 7
+  },
+  {
+    "name": "查看本机公网IP",
+    "url": "https://ipv4.alal.site",
+    "clicks": 5
+  },
+  {
+    "name": "RackNerd",
+    "url": "https://www.racknerd.com/",
+    "clicks": 4
+  },
+  {
+    "name": "推特",
+    "url": "https://x.com/",
+    "clicks": 3
+  },
+  {
+    "name": "电脑系统下载",
+    "url": "https://msdn.itellyou.cn/",
+    "clicks": 3
+  },
+  {
+    "name": "Excalidraw 绘图",
+    "url": "https://excalidraw.com",
+    "clicks": 3
+  },
+  {
+    "name": "Hysteria2",
+    "url": "https://v2.hysteria.network/",
+    "clicks": 3
+  },
+  {
+    "name": "局域网IP查询",
+    "url": "https://www.juyuwang.cn",
+    "clicks": 2
+  },
+  {
+    "name": "CLOUDCONE VPS",
+    "url": "https://app.cloudcone.com",
+    "clicks": 2
+  },
+  {
+    "name": "博客园",
+    "url": "https://www.cnblogs.com/",
+    "clicks": 2
+  },
+  {
+    "name": "PassWord Book",
+    "url": "/other.html",
+    "clicks": 1
+  },
+  {
+    "name": "影视TV",
+    "url": "https://yingshi.tv",
+    "clicks": 1
+  },
+  {
+    "name": "在线Ps",
+    "url": "https://www.tugaigai.com/online_ps/",
+    "clicks": 1
+  },
+  {
+    "name": "FreeSound",
+    "url": "https://freesound.org/",
+    "clicks": 1
+  },
+  {
+    "name": "在线网盘",
+    "url": "https://file.alal.site",
+    "clicks": 0
+  },
+  {
+    "name": "cobalt下载",
+    "url": "https://cobalt.tools",
+    "clicks": 0
+  },
+  {
+    "name": "HuTool",
+    "url": "https://doc.hutool.cn/",
+    "clicks": 0
+  },
+  {
+    "name": "知乎",
+    "url": "https://www.zhihu.com/",
+    "clicks": 0
+  },
+  {
+    "name": "hugging face",
+    "url": "https://huggingface.co/",
+    "clicks": 0
+  },
+  {
+    "name": "抖音",
+    "url": "https://douyin.com/",
+    "clicks": 0
+  },
+  {
+    "name": "微博",
+    "url": "https://www.weibo.com/",
+    "clicks": 0
+  },
+  {
+    "name": "Instagram",
+    "url": "https://www.instagram.com/",
+    "clicks": 0
+  },
+  {
+    "name": "Facebook",
+    "url": "https://www.facebook.com/",
+    "clicks": 0
+  },
+  {
+    "name": "Twitter",
+    "url": "https://twitter.com/",
+    "clicks": 0
+  },
+  {
+    "name": "Netflix",
+    "url": "https://www.netflix.com/",
+    "clicks": 0
+  },
+  {
+    "name": "smithery",
+    "url": "https://smithery.ai/",
+    "clicks": 0
+  },
+  {
+    "name": "archive",
+    "url": "https://archive.org/",
+    "clicks": 0
+  },
+  {
+    "name": "linux.do",
+    "url": "https://linux.do/",
+    "clicks": 0
+  },
+  {
+    "name": "抖音视频下载",
+    "url": "https://tiktokio.com",
+    "clicks": 0
+  },
+  {
+    "name": "阿里云Maven仓库",
+    "url": "https://maven.aliyun.com/mvn/search",
+    "clicks": 0
+  },
+  {
+    "name": "Kick",
+    "url": "https://kick.com",
+    "clicks": 0
+  },
+  {
+    "name": "AGE动漫",
+    "url": "https://www.agedm.org",
+    "clicks": 0
+  },
+  {
+    "name": "Online Access DB",
+    "url": "https://www.mdbopener.com",
+    "clicks": 0
+  }
+]
