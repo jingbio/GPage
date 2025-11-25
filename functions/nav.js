@@ -6,7 +6,7 @@ export async function onRequestGet(context) {
 }
 
 export async function onRequestPost(context) {
-    const token = context.request.headers.get('Authorization');
+    const token = context.request.headers.get('token');
     const auth = await context.env.GPage.get('auth');
     if (auth === token) {
         //return new Response('Unauthorized', { status: 401 });

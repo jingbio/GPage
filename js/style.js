@@ -64,7 +64,7 @@ async function updateClickRate(item) {
     navData.sort((a, b) => b.clicks - a.clicks);
     await fetch('/nav', {
         method: 'POST',
-        headers: {'Content-Type': 'application/json','Authorization': `Bearer ${token}`},
+        headers: {'Content-Type': 'application/json','token': token},
         body: JSON.stringify(navData)
     });
 }
