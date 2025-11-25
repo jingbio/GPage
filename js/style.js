@@ -1,5 +1,6 @@
 // =================== 全局变量 ===================
 let navData = [];
+let token = '';
 let startTime = new Date("2024-01-01 00:00:00");
 
 // ================== 加载 JSON 数据 ===============
@@ -63,7 +64,7 @@ async function updateClickRate(item) {
     navData.sort((a, b) => b.clicks - a.clicks);
     await fetch('/nav', {
         method: 'POST',
-        headers: {'Content-Type': 'application/json'},
+        headers: {'Content-Type': 'application/json','Authorization': `Bearer ${token}`},
         body: JSON.stringify(navData)
     });
 }
@@ -119,10 +120,9 @@ function getSearchEngineUrl(query) {
 // =================== 页面加载事件 ===================
 window.addEventListener('DOMContentLoaded', () => {
     loadNavData();
-    // =================== 初始化弹窗 ===================
+    // =================== 初始化搜索 ===================
     document.getElementById('searchBox').focus();
-
-    // 为搜索框添加键盘事件监听器
+    // =========== 为搜索框添加键盘事件监听器 ==============
     searchBox.addEventListener('keydown', handleSearchEnter);
 });
 
@@ -137,4 +137,17 @@ function getWebsiteRunTime() {
     const minutes = Math.floor((diff / (1000 * 60)) % 60);
     const seconds = Math.floor((diff / 1000) % 60);
     console.log(`本站已运行：${days}天 ${hours}小时 ${minutes}分 ${seconds}秒`)
+}
+// =================== 身份验证 ===================
+function auth(){
+    token = localStorage.getItem('token') || '';
+    if (token==='') {
+        token =prompt('请输入身份令牌（token）：');
+        if (token) {
+            localStorage.setItem('token', token);
+        } else {
+            alert('未提供令牌，某些功能可能无法使用。');
+            localStorage.setItem('token', 'default');
+        }
+    }
 }
