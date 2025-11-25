@@ -7,10 +7,11 @@ export async function onRequestGet(context) {
 
 export async function onRequestPost(context) {
     const auth = context.request.headers.get('Authorization');
-    if (!auth || !auth.startsWith('Bearer ') || auth.slice(7) !== '672099699') {
-        return new Response('Unauthorized', { status: 401 });
+    const token = await context.request.text();
+    if (auth === token) {
+        //return new Response('Unauthorized', { status: 401 });
+        const body = await context.request.text();
+        await context.env.GPage.put('navJson', body);
     }
-    const body = await context.request.text();
-    await context.env.GPage.put('navJson', body);
     return new Response('OK');
 }
