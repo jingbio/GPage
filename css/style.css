@@ -184,4 +184,27 @@ footer {
 .menu button:hover {
     background: #777;
 }
+/*模态框表单开始*/
+#myModal {
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,.4);
+    display: none; /* 默认隐藏 */
+    align-items: center;
+    justify-content: center;
+}
 
+.modal-box {
+    background: #fff;
+    padding: 20px;
+    border-radius: 6px;
+    min-width: 260px;
+    font-family: sans-serif;
+}
+
+.modal-box input {
+    width: 100%;
+    padding: 6px;
+    margin: 6px 0 12px;
+}
+/*模态框表单结束*/

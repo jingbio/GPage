@@ -32,11 +32,12 @@ function renderCards(data) {
         card.onclick = async () => {
             item.clicks = (item.clicks || 0) + 1;
             clicksElement.textContent = `${item.clicks}`;
-            await updateClickRate(item);
             if (item.url === 'add') {
                 //执行表单提交
-                submitNav();
+                openModal();
+                return;
             }
+            await updateClickRate(item);
             window.open(item.url, '_blank', 'noopener,noreferrer');
         };
         container.appendChild(card);
@@ -96,9 +97,32 @@ function getSearchEngineUrl(query) {
     }
 }
 // =================== 提交新收藏 ===================
-function submitNav(){
-    alert("add nav function is not implemented yet.");
+// 打开
+function openModal() {
+    document.getElementById("myModal").style.display = "flex";
 }
+
+// 关闭
+function closeModal() {
+    document.getElementById("myModal").style.display = "none";
+}
+
+// 点击提交
+document.getElementById("submitBtn").onclick = () => {
+    const data = {
+        name: document.getElementById("nameInput").value,
+        url: document.getElementById("urlInput").value
+    };
+
+    console.log("提交:", data);
+
+    closeModal();
+};
+
+// 点击遮罩关闭
+document.getElementById("myModal").onclick = (e) => {
+    if (e.target.id === "myModal") closeModal();
+};
 
 // =================== 页面加载事件 ===================
 window.addEventListener('DOMContentLoaded', () => {

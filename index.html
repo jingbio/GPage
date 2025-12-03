@@ -5,14 +5,27 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>WaySearch</title>
         <link rel="shortcut icon" type="image/x-icon" href="./css/favicon.ico">
-        <link rel="stylesheet" href="./css/style.css?v=202511251650">
-        <script src="./js/style.js?v=202512031719"></script>
+        <link rel="stylesheet" href="./css/style.css?v=202512031732">
+        <script src="./js/style.js?v=202512031732"></script>
     </head>
     <body>
         <h1>WaySearch</h1>
         <input type="text" id="searchBox" placeholder="Search...(Input / allow show all search card.)" oninput="filterCards()">
         <div class="card-container" id="navCards"></div>
+        <!-- 模态框 -->
+        <div id="myModal" style="display:none;">
+            <div class="modal-box">
+                <h3>提交信息</h3>
 
+                <label>名称</label>
+                <input id="nameInput">
+
+                <label>URL</label>
+                <input id="urlInput">
+
+                <button id="submitBtn">提交</button>
+            </div>
+        </div>
         <footer>
             <div style="text-align:center; margin-top: 15px; padding-top: 5px; border-top: 1px solid #4444;">
                 © 2025 way's navigation website. All rights reserved. 📫: <a href="mailto:heyjingway@gmail.com">heyjingway@gmail.com</a>
