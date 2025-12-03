@@ -13,19 +13,20 @@
         <input type="text" id="searchBox" placeholder="Search...(Input / allow show all search card.)" oninput="filterCards()">
         <div class="card-container" id="navCards"></div>
         <!-- 模态框 -->
-        <div id="myModal" style="display:none;">
+        <div id="myModal" class="modal">
             <div class="modal-box">
                 <h3>AddNav</h3>
 
                 <label>site</label>
-                <input id="nameInput">
+                <input id="nameInput" placeholder="Input Website Name">
 
                 <label>url</label>
-                <input id="urlInput">
+                <input id="urlInput" placeholder="https://example.com">
 
-                <button id="submitBtn" onclick="submitNewNav()">Ok</button>
+                <button id="submitBtn" class="submit-btn" onclick="submitNewNav()">Ok</button>
             </div>
         </div>
+
         <footer>
             <div style="text-align:center; margin-top: 15px; padding-top: 5px; border-top: 1px solid #4444;">
                 © 2025 way's navigation website. All rights reserved. 📫: <a href="mailto:heyjingway@gmail.com">heyjingway@gmail.com</a>
