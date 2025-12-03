@@ -58,7 +58,15 @@ async function updateClickRate(item) {
 function filterCards() {
     const query = document.getElementById('searchBox').value.toLowerCase();
     const filtered = navData.filter(item => item.name.toLowerCase().includes(query));
-    query === "/" ? renderCards(navData) : renderCards(filtered.slice(0, 6).length === 0 ? navData[navData.length - 1] : filtered.slice(0, 6));
+    query === "/" ? renderCards(navData) : renderCards(filtered.slice(0, 6).length === 0 ? exactSearchByName('AddNav') : filtered.slice(0, 6));
+}
+
+// =================== 精确查找根据Name ===================
+function exactSearchByName(name) {
+    const filtered = navData.filter(item => item.name.toLowerCase() === name.toLowerCase());
+    if (filtered.length > 0) {
+        return filtered[0];
+    }
 }
 
 // =================== 处理回车搜索 ===================
