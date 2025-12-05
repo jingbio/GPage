@@ -48,11 +48,7 @@ async function updateClickRate(item) {
     navData = navData.filter(navItem => navItem.name !== item.name);
     navData.push(item);
     navData.sort((a, b) => b.clicks - a.clicks);
-    await fetch('/nav', {
-        method: 'POST',
-        headers: {'Content-Type': 'application/json','token': token},
-        body: JSON.stringify(navData)
-    });
+    await sent(navData);
 }
 
 // =================== 实时搜索 =====================
@@ -118,12 +114,15 @@ function submitNewNav() {
         return;
     }
     navData.push(data);
-    fetch('/nav', {
+    sent(navData).then(r => closeModal());
+}
+
+async function sent(navData){
+    await fetch('/nav', {
         method: 'POST',
-        headers: {'Content-Type': 'application/json','token': token},
+        headers: {'Content-Type': 'application/json', 'token': token},
         body: JSON.stringify(navData)
     });
-    closeModal();
 }
 
 // =================== 页面加载事件 ===================
