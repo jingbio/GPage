@@ -187,4 +187,5 @@ function auth(auth){
         appKey = '';
         alert('已清除身份验证信息');
     }
+    location.reload();
 }
