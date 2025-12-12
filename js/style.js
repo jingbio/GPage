@@ -29,6 +29,7 @@ function renderCards(data) {
         clicksElement.textContent = `${item.clicks || -1}`;
         card.appendChild(nameElement);
         card.appendChild(clicksElement);
+        //左键打开
         card.onclick = async () => {
             if (item.url === 'add') {
                 //执行表单提交
@@ -39,6 +40,17 @@ function renderCards(data) {
             clicksElement.textContent = `${item.clicks}`;
             await updateClickRate(item);
             window.open(item.url, '_blank', 'noopener,noreferrer');
+        };
+        // 右键删除
+        card.oncontextmenu = (e) => {
+            e.preventDefault();
+            const ok = confirm(`删除卡片 "${item.name}" ?`);
+            if (!ok) return;
+
+            removeNav(item.name);
+
+            // 重渲染
+            filterCards();
         };
         container.appendChild(card);
     });
@@ -115,6 +127,11 @@ function submitNewNav() {
     }
     navData.push(data);
     sent(navData).then(r => closeModal());
+}
+//删除
+async function removeNav(name){
+    navData = navData.filter(item => item.name !== name);
+    await sent(navData);
 }
 
 async function sent(navData){
