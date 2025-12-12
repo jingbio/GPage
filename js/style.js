@@ -133,7 +133,7 @@ function submitNewNav() {
     const data = {
         name: document.getElementById("nameInput").value,
         url: document.getElementById("urlInput").value,
-        clicks:0
+        clicks:1
     };
     if (data.name === '' || data.url === '') {
         alert('please complete the form');
