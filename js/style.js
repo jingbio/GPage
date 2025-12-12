@@ -1,12 +1,15 @@
 // =================== 全局变量 ===================
 let navData = [];
-let token = localStorage.getItem('token') || '';
+let appKey = localStorage.getItem('appKey') || '';
 let startTime = new Date("2024-01-01 00:00:00");
 
 // ================== 加载 JSON 数据 ===============
 async function loadNavData() {
     try {
-        const res = await fetch('/nav');
+        const res = await fetch('/nav', {
+            method: 'GET',
+            headers: {'Content-Type': 'application/json', 'appKey': appKey},
+        });
         navData = await res.json();
         renderCards(navData.slice(0, 6));
     } catch (err) {
@@ -137,7 +140,7 @@ async function removeNav(name){
 async function sent(navData){
     await fetch('/nav', {
         method: 'POST',
-        headers: {'Content-Type': 'application/json', 'token': token},
+        headers: {'Content-Type': 'application/json', 'appKey': appKey},
         body: JSON.stringify(navData)
     });
 }
@@ -168,16 +171,16 @@ function getWebsiteRunTime() {
 // =================== 身份验证 ===================
 function auth(auth){
     if (auth) {
-        token = localStorage.getItem('token') || '';
-        if (token==='') {
-            token =prompt('Input auth（token）：');
-            localStorage.setItem('token', token);
+        appKey = localStorage.getItem('appKey') || '';
+        if (appKey==='') {
+            appKey =prompt('Input auth（appKey）：');
+            localStorage.setItem('appKey', appKey);
         } else {
-            token = localStorage.getItem('token');
+            appKey = localStorage.getItem('appKey');
         }
     } else {
-        localStorage.setItem('token', '');
-        token = '';
+        localStorage.setItem('appKey', '');
+        appKey = '';
         alert('已清除身份验证信息');
     }
 }
