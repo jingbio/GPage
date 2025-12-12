@@ -1,6 +1,9 @@
 export async function onRequestGet(context) {
     const appKey = context.request.headers.get('appKey');
     const data = await context.env.GPage.get(appKey);
+    if (data === null) {
+        return new Response('Unauthorized', { status: 401 });
+    }
     return new Response(data || '[]', {
         headers: { 'Content-Type': 'application/json' }
     });

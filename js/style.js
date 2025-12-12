@@ -10,10 +10,25 @@ async function loadNavData() {
             method: 'GET',
             headers: {'Content-Type': 'application/json', 'appKey': appKey},
         });
+        if (res.status === 401) {
+            alert('Unauthorized!');
+            return;
+        }
         navData = await res.json();
         renderCards(navData.slice(0, 6));
     } catch (err) {
-        console.error('加载导航数据失败', err);
+        console.error('load db error', err);
+    }
+}
+// ================== 修改 JSON 数据 ===============
+async function updateNavData(navData) {
+    const res = await fetch('/nav', {
+        method: 'POST',
+        headers: {'Content-Type': 'application/json', 'appKey': appKey},
+        body: JSON.stringify(navData)
+    });
+    if (res.status === 401) {
+        alert('Unauthorized!');
     }
 }
 
@@ -49,21 +64,18 @@ function renderCards(data) {
             e.preventDefault();
             const ok = confirm(`删除卡片 "${item.name}" ?`);
             if (!ok) return;
-
-            removeNav(item.name);
-
-            // 重渲染
-            filterCards();
+            removeNav(item.name).then(r => filterCards());
         };
         container.appendChild(card);
     });
 }
+
 // =================== 更新点击率 ===================
 async function updateClickRate(item) {
     navData = navData.filter(navItem => navItem.name !== item.name);
     navData.push(item);
     navData.sort((a, b) => b.clicks - a.clicks);
-    await sent(navData);
+    await updateNavData(navData);
 }
 
 // =================== 实时搜索 =====================
@@ -107,16 +119,18 @@ function getSearchEngineUrl(query) {
         return `https://www.bing.com/search?q=${encodedQuery}`;
     }
 }
-// =================== 提交新收藏 ===================
-// 打开
+
+// =================== 打开模态框 ===================
 function openModal() {
     document.getElementById("myModal").style.display = "flex";
 }
 
-// 关闭
+// =================== 关闭模态框 ===================
 function closeModal() {
     document.getElementById("myModal").style.display = "none";
 }
+
+// =================== 提交新收藏 ===================
 function submitNewNav() {
     const data = {
         name: document.getElementById("nameInput").value,
@@ -129,20 +143,13 @@ function submitNewNav() {
         return;
     }
     navData.push(data);
-    sent(navData).then(r => closeModal());
-}
-//删除
-async function removeNav(name){
-    navData = navData.filter(item => item.name !== name);
-    await sent(navData);
+    updateNavData(navData).then(r => closeModal());
 }
 
-async function sent(navData){
-    await fetch('/nav', {
-        method: 'POST',
-        headers: {'Content-Type': 'application/json', 'appKey': appKey},
-        body: JSON.stringify(navData)
-    });
+// ================= 根据名称删除卡片 =================
+async function removeNav(name){
+    navData = navData.filter(item => item.name !== name);
+    await updateNavData(navData);
 }
 
 // =================== 页面加载事件 ===================
@@ -157,7 +164,6 @@ window.addEventListener('DOMContentLoaded', () => {
 });
 
 // =================== 工具函数 ===================
-
 function getWebsiteRunTime() {
     const now = new Date();
     const diff = now - startTime; // 毫秒差
@@ -168,6 +174,7 @@ function getWebsiteRunTime() {
     const seconds = Math.floor((diff / 1000) % 60);
     console.log(`this website has been run ：${days} day ${hours} hour ${minutes} minute ${seconds} seconds`)
 }
+
 // =================== 身份验证 ===================
 function auth(auth){
     if (auth) {
