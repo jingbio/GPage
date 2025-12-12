@@ -10,10 +10,6 @@ async function loadNavData() {
             method: 'GET',
             headers: {'Content-Type': 'application/json', 'appKey': appKey},
         });
-        if (res.status === 401) {
-            alert('Unauthorized!');
-            return;
-        }
         navData = await res.json();
         renderCards(navData.slice(0, 6));
     } catch (err) {
@@ -22,13 +18,14 @@ async function loadNavData() {
 }
 // ================== 修改 JSON 数据 ===============
 async function updateNavData(navData) {
-    const res = await fetch('/nav', {
-        method: 'POST',
-        headers: {'Content-Type': 'application/json', 'appKey': appKey},
-        body: JSON.stringify(navData)
-    });
-    if (res.status === 401) {
-        alert('Unauthorized!');
+    try {
+        const res = await fetch('/nav', {
+            method: 'POST',
+            headers: {'Content-Type': 'application/json', 'appKey': appKey},
+            body: JSON.stringify(navData)
+        });
+    } catch (err) {
+        console.error('load db error', err);
     }
 }
 
