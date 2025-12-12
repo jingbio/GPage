@@ -142,6 +142,7 @@ function submitNewNav() {
     }
     navData.push(data);
     updateNavData(navData).then(r => closeModal());
+    location.reload();
 }
 
 // ================= 根据名称删除卡片 =================
